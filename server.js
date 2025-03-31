@@ -36,6 +36,6 @@ io.on('connection', socket => {
 });
 
 
-server.listen(3000, '192.168.68.109', () => {
-    console.log('Server actief op http://192.168.68.109:3000');
-});
+server.listen(process.env.PORT || 3000, () => {
+     console.log('Server actief');
+ });
