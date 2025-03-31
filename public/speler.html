@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>JVO Buzzer - Speler</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <style>
+        body { font-family: Arial; background-color: #222; color: white; text-align: center; margin: 0; padding-top: 20px;}
+        img { height: 50px; }
+        button { width: 300px; height: 300px; font-size: 40px; color: white; border-radius: 50%; cursor: pointer; border:none;}
+        .logout { position: absolute; top:20px; right:20px; background-color: #3b82f6; border-radius:20px; padding:8px 15px; cursor:pointer; border:none; color:white;}
+		.logout {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    width: auto;
+    height: auto;
+    box-shadow: none;
+}
+    </style>
+</head>
+<body>
+    <img src="JvOBuzzer01.png" alt="JVO Buzzer">
+    <button class="logout" onclick="logout()">LOGOUT</button>
+    
+    <h2 id="playerInfo"></h2>
+    <button id="buzzerBtn">READY</button>
+
+<script>
+    const socket = io();
+    const params = new URLSearchParams(location.search);
+    const naam = params.get('naam');
+    const team = params.get('team');
+
+    document.getElementById('playerInfo').innerHTML = `${naam}<br><small>${team}</small>`;
+    const buzzerBtn = document.getElementById('buzzerBtn');
+    let hasBuzzed = false, buzzerActive = false;
+
+    buzzerBtn.onclick = () => {
+        if (!hasBuzzed && buzzerActive) {
+            socket.emit('buzz', { naam, team });
+            buzzerBtn.style.backgroundColor='#4caf50';
+            buzzerBtn.innerText='BUZZED';
+            hasBuzzed = true;
+        }
+    };
+
+    socket.on('buzzersOff', () => {
+        buzzerBtn.style.backgroundColor='gray';
+        buzzerBtn.innerText='READY';
+        buzzerActive=false; hasBuzzed=false;
+    });
+
+    socket.on('buzzersOn', () => {
+        buzzerBtn.style.backgroundColor='red';
+        buzzerBtn.innerText='JOIN';
+        buzzerActive=true; hasBuzzed=false;
+    });
+
+    function logout(){ location.href='join.html'; }
+
+    buzzerBtn.style.backgroundColor='gray';
+</script>
+</body>
+</html>

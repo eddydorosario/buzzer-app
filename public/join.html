@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>JVO Buzzer - Join</title>
+    <style>
+        body { font-family: Arial; background-color: #222; color: white; text-align: center; }
+        img { height: 60px; margin-top: 30px; }
+        input { padding: 12px; font-size: 18px; border-radius: 5px; border: none; width: 250px; }
+        button { padding: 12px 30px; border: none; border-radius: 25px; background-color: #4caf50; color: white; cursor: pointer; font-size: 18px; margin-top:20px;}
+    </style>
+</head>
+<body>
+    <img src="JvOBuzzer01.png" alt="JVO Buzzer">
+    <h2>Voer de GAME CODE in</h2>
+    <input id="gameCode" placeholder="Game code">
+    <br>
+    <button onclick="join()">JOIN</button>
+
+    <script>
+        function join() {
+            const code = document.getElementById('gameCode').value;
+            location.href = `player.html?gameCode=${encodeURIComponent(code)}`;
+        }
+    </script>
+</body>
+</html>

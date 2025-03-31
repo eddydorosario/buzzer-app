@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>JVO Buzzer - Host Start</title>
+    <style>
+        body { font-family: Arial; background-color: #222; color: white; text-align: center; }
+        img { height: 60px; margin-top: 30px; }
+        input { padding: 12px; font-size: 18px; border-radius: 5px; border: none; width: 300px; }
+        button { padding: 12px 30px; border: none; border-radius: 25px; background-color: #3b82f6; color: white; cursor: pointer; font-size: 18px; margin-top:20px;}
+    </style>
+</head>
+<body>
+    <img src="JvOBuzzer01.png" alt="JVO Buzzer">
+    <h2>Maak nieuw spel aan</h2>
+    <input type="text" id="gameTitle" placeholder="Naam van het spel">
+    <br>
+    <button onclick="begin()">BEGIN</button>
+
+    <script>
+        function begin() {
+            const title = document.getElementById('gameTitle').value;
+            location.href = `host.html?title=${encodeURIComponent(title)}`;
+        }
+    </script>
+</body>
+</html>

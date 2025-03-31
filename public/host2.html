@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Host - Buzzer</title>
+</head>
+<body>
+    <h1>Hostscherm</h1>
+    <button id="reset">Reset buzzers</button>
+    <h2 id="resultaat">Wachten op speler...</h2>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        const resultaat = document.getElementById('resultaat');
+        const resetKnop = document.getElementById('reset');
+
+        socket.on('iemandHeeftGebuzzerd', naam => {
+            resultaat.textContent = `${naam} heeft gebuzzerd!`;
+        });
+
+        resetKnop.onclick = () => {
+            resultaat.textContent = "Wachten op speler...";
+            socket.emit('resetBuzzers');
+        };
+    </script>
+</body>
+</html>
