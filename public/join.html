@@ -1,27 +1,44 @@
 <!DOCTYPE html>
 <html lang="nl">
+
 <head>
     <meta charset="UTF-8">
     <title>JVO Buzzer - Join</title>
-    <style>
-        body { font-family: Arial; background-color: #222; color: white; text-align: center; }
-        img { height: 60px; margin-top: 30px; }
-        input { padding: 12px; font-size: 18px; border-radius: 5px; border: none; width: 250px; }
-        button { padding: 12px 30px; border: none; border-radius: 25px; background-color: #4caf50; color: white; cursor: pointer; font-size: 18px; margin-top:20px;}
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <img src="JvOBuzzer01.png" alt="JVO Buzzer">
-    <h2>Voer de GAME CODE in</h2>
-    <input id="gameCode" placeholder="Game code">
-    <br>
+
+      <header>
+        <img src="JvOBuzzer01.png" alt="JVO Buzzer">
+    </header>
+
+    <h2>Game Code</h2>
+    <input id="gameCode" placeholder="Game code"><br>
+
+    <h2>Naam speler</h2>
+    <input id="playerName" placeholder="Jouw naam"><br>
+
+    <h2>Team (optioneel)</h2>
+    <input id="teamName" placeholder="Team naam"><br>
+
     <button onclick="join()">JOIN</button>
 
     <script>
         function join() {
-            const code = document.getElementById('gameCode').value;
-            location.href = `player.html?gameCode=${encodeURIComponent(code)}`;
+            const code = document.getElementById('gameCode').value.trim();
+            const naam = document.getElementById('playerName').value.trim();
+            const team = document.getElementById('teamName').value.trim();
+
+            if (code === "" || naam === "") {
+                alert("Vul zowel een gamecode als je naam in!");
+                return;
+            }
+
+            location.href = `player.html?gameCode=${encodeURIComponent(code)}&speler=${encodeURIComponent(naam)}&team=${encodeURIComponent(team)}`;
         }
     </script>
+
 </body>
+
 </html>

@@ -1,0 +1,137 @@
+
+
+/* Algemene layout */
+body {
+    background: #222;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+    background: rgba(0,0,0,0.7);
+}
+
+header img {
+    height: 60px;
+}
+
+.container {
+    padding: 20px;
+}
+
+button {
+    background: #3369ff;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 15px 30px;
+    margin: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    background: #264bb8;
+}
+
+button:disabled {
+    background: grey;
+    cursor: not-allowed;
+}
+
+/* Panel */
+.panel {
+    background: #333;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 20px auto;
+    width: 300px;
+}
+
+.panel h3 {
+    color: #ffcc33;
+    margin-bottom: 10px;
+}
+
+/* QR Code */
+#qrcode {
+    margin: 10px;
+    border: 4px solid #ffcc33;
+    padding: 5px;
+    background: white;
+    border-radius: 8px;
+}
+
+/* Tabellen */
+table {
+    border-collapse: collapse;
+    width: 90%;
+    margin: 20px auto;
+    background: #333;
+    color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th, td {
+    border: 1px solid #555;
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background-color: #4caf50;
+    color: #fff;
+}
+
+#teamScores th {
+    background-color: #ffcc33;
+    color: #222;
+}
+
+/* Buzzer knop */
+#buzzerButton {
+    width: 200px;
+    height: 200px;
+    border-radius: 100%;
+    font-size: 24px;
+    background: red;
+    color: white;
+    border: none;
+    transition: all 0.2s;
+}
+
+#buzzerButton.buzzed {
+    transform: scale(0.9);
+    opacity: 0.7;
+}
+
+/* Team kleuren */
+.team-rood { background: #FFB3B3; }
+.team-blauw { background: #B3C6FF; }
+.team-geel { background: #FFF5B3; }
+.team-groen { background: #B3FFB3; }
+
+/* Status */
+#buzzerStatus {
+    padding: 5px 15px;
+    border-radius: 15px;
+}
+header img {
+    height: 60px; /* Pas de hoogte van de afbeelding aan naar gewenst formaat */
+    width: auto;  /* Zorg ervoor dat de breedte in verhouding blijft */
+}
+
+/* Timer */
+#timerDisplay {
+    font-size: 24px;
+    color: #ffcc33;
+}

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>JVO Buzzer Host</title><br>
+	<link rel="stylesheet" href="style.css">
+    <script src="/socket.io/socket.io.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #222;
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #000;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        header img {
+            height: 60px;
+        }
+
+        .game-info {
+            background-color: black;
+            color: white;
+            padding: 10px;
+            font-size: 20px;
+        }
+
+        .game-info span {
+            color: yellow;
+            font-weight: bold;
+        }
+
+        .container {
+            margin-top: 30px;
+        }
+
+        table {
+            margin: 0 auto;
+            border-collapse: collapse;
+            width: 80%;
+            max-width: 600px;
+            font-size: 18px;
+        }
+
+        th {
+            background-color: #f1b500;
+            color: #000;
+            padding: 12px;
+        }
+
+        td {
+            background-color: #ffffff;
+            color: #000;
+            padding: 12px;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            border-radius: 50%;
+            background-color: white;
+            transition: .4s;
+            left: 4px;
+            bottom: 4px;
+        }
+
+        input:checked + .slider {
+            background-color: #4caf50;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .logout {
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            position: absolute;
+            right: 20px;
+            top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <img src="JvOBuzzer01.png" alt="JVO Buzzer">
+    </header>
+
+    <button class="logout" onclick="logout()">LOGOUT</button>
+
+    <div class="game-info">
+        GAME CODE: <span id="gameCode"></span><br>
+        <strong id="gameTitle">BATTLE OF THE CITIES</strong>
+    </div>
+
+    <div class="container">
+        Buzzers:
+        <label class="switch">
+            <input type="checkbox" id="buzzerToggle" checked>
+            <span class="slider"></span>
+        </label>
+        <span id="buzzerStatus">(klik om te resetten)</span>
+
+        <table id="results">
+            <thead>
+                <tr>
+                    <th>RANK</th>
+                    <th>NAME</th>
+                    <th>TEAM</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <script>
+        const socket = io();
+        const urlParams = new URLSearchParams(window.location.search);
+        const gameTitle = urlParams.get('title') || 'BATTLE OF THE CITIES';
+        document.getElementById('gameTitle').innerText = gameTitle;
+        const gameCode = (Math.random().toString(36).substring(2, 6)).toUpperCase();
+        document.getElementById('gameCode').textContent = gameCode;
+
+        let rank = 1;
+        const results = document.querySelector('#results tbody');
+        const buzzerToggle = document.getElementById('buzzerToggle');
+
+        buzzerToggle.addEventListener('change', () => {
+            if (buzzerToggle.checked) {
+                rank = 1;
+                results.innerHTML = '';
+                socket.emit('buzzersOn');
+            } else {
+                socket.emit('buzzersOff');
+            }
+        });
+
+        socket.on('iemandHeeftGebuzzerd', ({ naam, team }) => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td>${rank++}</td><td>${naam}</td><td>${team}</td>`;
+            results.appendChild(tr);
+        });
+
+        function logout() {
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+
+</html>

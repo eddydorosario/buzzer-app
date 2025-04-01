@@ -1,30 +1,40 @@
+
 <!DOCTYPE html>
 <html lang="nl">
+
 <head>
     <meta charset="UTF-8">
-    <title>JVO Buzzer - Naam & Team</title>
-    <style>
-        body { font-family: Arial; background-color: #222; color: white; text-align: center; }
-        img { height: 60px; margin-top: 20px; }
-        input { padding: 12px; font-size: 18px; border-radius: 5px; border: none; width: 300px; margin:5px; }
-        button { padding: 12px 30px; border: none; border-radius: 25px; background-color: #4caf50; color: white; cursor: pointer; font-size: 18px; margin-top:20px;}
-    </style>
+    <title>JVO Buzzer - Player</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="/socket.io/socket.io.js"></script>
+  
 </head>
-<body>
-    <img src="JvOBuzzer01.png" alt="JVO Buzzer">
-    <h2>Naam & Team invoeren</h2>
-    <input id="playerName" placeholder="Naam speler"><br>
-    <input id="teamName" placeholder="Team naam (optioneel)"><br>
-    <button onclick="start()">ENTER</button>
 
-    <script>
-        const params = new URLSearchParams(location.search);
-        const code = params.get('gameCode');
-        function start() {
-            const naam = document.getElementById('playerName').value;
-            const team = document.getElementById('teamName').value;
-            location.href = `speler.html?gameCode=${encodeURIComponent(code)}&naam=${encodeURIComponent(naam)}&team=${encodeURIComponent(team)}`;
-        }
-    </script>
+<body>
+    <header>
+        <img src="JvOBuzzer01.png" alt="JVO Buzzer">
+    </header>
+
+    <div class="container">
+        <h2>Speler Interface</h2>
+
+        <p><b>Naam:</b> <span id="spelerNaam"></span></p>
+        <p><b>Team:</b> <span id="teamNaam"></span></p>
+
+        <p>
+            <b>Status:</b>
+            <span id="statusText" style="padding:5px 15px; border-radius:15px; background: grey; color: white;">
+                Wacht op host...
+            </span>
+        </p>
+
+        <button id="buzzerButton" disabled>READY</button>
+    </div>
+
+    <!-- Plaats het script hier, onderaan de body -->
+    <script src="player.js"></script>
 </body>
+
+
 </html>
+

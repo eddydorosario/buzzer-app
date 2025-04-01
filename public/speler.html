@@ -3,70 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>JVO Buzzer - Speler</title>
+    <link rel="stylesheet" href="style.css">
     <script src="/socket.io/socket.io.js"></script>
-    <style>
-        body { font-family: Arial; background-color: #222; color: white; text-align: center; margin: 0; padding-top: 20px;}
-        img { height: 50px; }
-        button { width: 300px; height: 300px; font-size: 40px; color: white; border-radius: 50%; cursor: pointer; border:none;}
-        .logout { position: absolute; top:20px; right:20px; background-color: #3b82f6; border-radius:20px; padding:8px 15px; cursor:pointer; border:none; color:white;}
-		.logout {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background-color: #3b82f6;
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 16px;
-    width: auto;
-    height: auto;
-    box-shadow: none;
-}
-    </style>
 </head>
 <body>
+
+<header>
     <img src="JvOBuzzer01.png" alt="JVO Buzzer">
-    <button class="logout" onclick="logout()">LOGOUT</button>
-    
-    <h2 id="playerInfo"></h2>
-    <button id="buzzerBtn">READY</button>
+</header>
 
-<script>
-    const socket = io();
-    const params = new URLSearchParams(location.search);
-    const naam = params.get('naam');
-    const team = params.get('team');
+<div class="container">
 
-    document.getElementById('playerInfo').innerHTML = `${naam}<br><small>${team}</small>`;
-    const buzzerBtn = document.getElementById('buzzerBtn');
-    let hasBuzzed = false, buzzerActive = false;
+    <h2>Welkom <span id="spelerNaam"></span> (<span id="teamNaam"></span>)</h2>
 
-    buzzerBtn.onclick = () => {
-        if (!hasBuzzed && buzzerActive) {
-            socket.emit('buzz', { naam, team });
-            buzzerBtn.style.backgroundColor='#4caf50';
-            buzzerBtn.innerText='BUZZED';
-            hasBuzzed = true;
-        }
-    };
+    <p>Status: <span id="statusText">Wacht op host...</span></p>
 
-    socket.on('buzzersOff', () => {
-        buzzerBtn.style.backgroundColor='gray';
-        buzzerBtn.innerText='READY';
-        buzzerActive=false; hasBuzzed=false;
-    });
+    <button id="buzzerButton" disabled>READY</button>
 
-    socket.on('buzzersOn', () => {
-        buzzerBtn.style.backgroundColor='red';
-        buzzerBtn.innerText='JOIN';
-        buzzerActive=true; hasBuzzed=false;
-    });
+</div>
 
-    function logout(){ location.href='join.html'; }
+<script src="speler.js"></script>
 
-    buzzerBtn.style.backgroundColor='gray';
-</script>
 </body>
 </html>
